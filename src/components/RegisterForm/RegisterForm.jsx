@@ -1,38 +1,93 @@
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../../redux/auth/operations';
-import css from './RegisterForm.module.css';
+import { getIsLoading } from '../../redux/auth/selectors';
+import { NavLink } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BtnLoader } from 'components/BtnLoader/BtnLoader';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(getIsLoading);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    const form = e.currentTarget;
-    dispatch(
-      signup({
-        name: form.elements.name.value,
-        email: form.elements.email.value,
-        password: form.elements.password.value,
-      })
-    );
-    form.reset();
+
+    // Check if any of the fields are empty
+    if (!name.trim()) {
+      toast.error('Name is required');
+      return;
+    }
+    if (!email.trim()) {
+      toast.error('Email is required');
+      return;
+    }
+    if (!password.trim()) {
+      toast.error('Password is required');
+      return;
+    }
+    try {
+      await dispatch(signup({ name, email, password })).unwrap();
+      // Clear form upon successful registration
+      setName('');
+      setEmail('');
+      setPassword('');
+    } catch (error) {}
   };
 
   return (
-    <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
-      <label className={css.label}>
-        Username
-        <input type="text" name="name" />
-      </label>
-      <label className={css.label}>
-        Email
-        <input type="email" name="email" />
-      </label>
-      <label className={css.label}>
-        Password
-        <input type="password" name="password" />
-      </label>
-      <button type="submit">Register</button>
-    </form>
+    <div>
+      <ToastContainer />
+      <p className="flex md:justify-start justify-center text-[14px] font-bold text-orange tracking-[0.56px] uppercase">
+        Register
+      </p>
+      <form onSubmit={handleSubmit} className="mt-[60px]">
+        <div className="flex flex-col gap-[40px] text-[14px] font-bold placeholder:text-textgray tracking-[0.56px] w-full md:max-w-[300px]">
+          <input
+            className="border-b-[1px] focus:border-orange outline-0 pb-[20px]"
+            type="text"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            placeholder="Name *"
+          />
+          <input
+            className="border-b-[1px] focus:border-orange outline-0 pb-[20px]"
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="Email *"
+          />
+          <input
+            className="border-b-[1px] focus:border-orange outline-0 pb-[20px]"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Password *"
+          />
+        </div>
+        <div className="flex md:flex-row flex-col items-center gap-[32px] mt-[60px]">
+          <button
+            type="submit"
+            className="flex w-[182px] py-[13px] px-[37px] bg-orange items-center justify-center rounded-[30px] shadow-[0px_4px_10px_0px_rgba(252,132,45,0.50)] text-white font-bold text-[14px] hover:bg-darkorange"
+            disabled={isLoading}
+          >
+            {isLoading ? <BtnLoader color="#fff" /> : 'Register'}
+          </button>
+          <NavLink to="/login">
+            <button
+              type="button"
+              className="flex w-[182px] py-[13px] px-[37px] bg-white items-center justify-center rounded-[30px] border-[2px] border-orange text-orange font-bold text-[14px] hover:bg-orange hover:text-white"
+              disabled={isLoading}
+            >
+              Login
+            </button>
+          </NavLink>
+        </div>
+      </form>
+    </div>
   );
 };
