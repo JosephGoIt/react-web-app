@@ -23,7 +23,7 @@ export const signup = createAsyncThunk(
     try {
       const res = await axios.post('/signup', credentials);
       // After successful registration, add the token to the HTTP header
-      //   setAuthHeader(res.data.token);
+      setAuthHeader(res.data.token);
       // After registration, en email verification is sent to email that must be verified first
       return res.data;
     } catch (error) {
@@ -42,7 +42,7 @@ export const login = createAsyncThunk(
     try {
       const res = await axios.post('/login', credentials);
       // After successful login, add the token to the HTTP header
-      setAuthHeader(res.data.token);
+      // setAuthHeader(res.data.token);
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -83,7 +83,7 @@ export const current = createAsyncThunk(
     try {
       // If there is a token, add it to the HTTP header and perform the request
       setAuthHeader(persistedToken);
-      const res = await axios.get('/current/me');
+      const res = await axios.get('/current');
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

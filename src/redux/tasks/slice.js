@@ -42,7 +42,7 @@ const tasksSlice = createSlice({
         );
         state.items.splice(index, 1);
       })
-      .addCase(deleteTask.rejected, handleRejected)
+      .addCase(deleteTask.rejected, handleRejected);
   },
 });
 
