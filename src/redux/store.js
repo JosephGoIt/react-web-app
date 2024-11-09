@@ -13,11 +13,16 @@ import storage from 'redux-persist/lib/storage';
 import { tasksReducer } from './tasks/slice';
 import { authReducer } from './auth/slice';
 
-// Persisting token field from auth slice to localstorage
 const authPersistConfig = {
   key: 'auth',
   storage,
   whitelist: ['user', 'token', 'refreshToken'],
+};
+
+// Custom middleware to log actions
+const actionLogger = store => next => action => {
+  console.log('Dispatched action:', action);
+  return next(action);
 };
 
 export const store = configureStore({
@@ -30,7 +35,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(actionLogger), // Add the action logger middleware here
   devTools: process.env.NODE_ENV === 'development',
 });
 
