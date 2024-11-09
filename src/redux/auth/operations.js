@@ -51,14 +51,14 @@ const scheduleTokenRefresh = (token, dispatch) => {
  * body: { name, email, password }
  */
 export const signup = createAsyncThunk(
-  'api/users',
+  '/api/users',
   async (credentials, thunkAPI) => {
     try {
       const res = await axios.post('/api/users/signup', credentials);
       // After successful registration, add the token to the HTTP header
       setAuthHeader(res.data.token);
       toast.success(
-        'Account created! Verification has been sent to your email'
+        'Account created! Verification has been sent to your email. Please verify your email.'
       );
       // After registration, en email verification is sent to email that must be verified first
       return res.data;

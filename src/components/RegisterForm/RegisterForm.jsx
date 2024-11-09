@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../../redux/auth/operations';
 import { getIsLoading } from '../../redux/auth/selectors';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BtnLoader } from 'components/BtnLoader/BtnLoader';
@@ -77,15 +77,6 @@ export const RegisterForm = () => {
           >
             {isLoading ? <BtnLoader color="#fff" /> : 'Register'}
           </button>
-          <NavLink to="/login">
-            <button
-              type="button"
-              className="flex w-[182px] py-[13px] px-[37px] bg-white items-center justify-center rounded-[30px] border-[2px] border-orange text-orange font-bold text-[14px] hover:bg-orange hover:text-white"
-              disabled={isLoading}
-            >
-              Login
-            </button>
-          </NavLink>
         </div>
       </form>
     </div>
