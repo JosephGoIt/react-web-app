@@ -1,7 +1,6 @@
-import React from 'react';
-import{ useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/tasks/slice';
+import { addContact } from '../../redux/tasks/contactSlice';
 import { selectContacts } from '../../redux/tasks/selectors';
 import css from './ContactForm.module.css';
 
@@ -10,6 +9,8 @@ export const ContactForm = () => {
   const contacts = useSelector(selectContacts);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [favorite, setFavorite] = useState('');
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -19,10 +20,18 @@ export const ContactForm = () => {
     setPhone(e.target.value);
   };
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleFavoriteChange = (e) => {
+    setFavorite(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (name.trim() === '' || phone.trim() === '') {
+    if (name.trim() === '' || phone.trim() === '' || email.trim() === '') {
       return;
     }
 
@@ -32,9 +41,11 @@ export const ContactForm = () => {
       return;
     }
 
-    dispatch(addContact({ name, phone }));
+    dispatch(addContact({ name, phone, email, favorite }));
     setName('');
     setPhone('');
+    setEmail('');
+    setFavorite('');
   };
 
   return (
@@ -53,6 +64,19 @@ export const ContactForm = () => {
       </label>
 
       <label className={css.formField}>
+        <p className={css.formLabel}>Email</p>
+        <input
+          type="text"
+          name="email"
+          pattern="^[a-zA-Za-яА-Я]+(([' \-][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
+          value={email}
+          onChange={handleEmailChange}
+          required
+          placeholder="Enter email"
+        />
+      </label>
+
+      <label className={css.formField}>
         <p className={css.formLabel}>Number</p>
         <input
           type="tel"
@@ -62,6 +86,19 @@ export const ContactForm = () => {
           onChange={handlePhoneChange}
           required
           placeholder="Enter number"
+        />
+      </label>
+
+      <label className={css.formField}>
+        <p className={css.formLabel}>Favorite</p>
+        <input
+          type="bolean"
+          name="favorite"
+          pattern="^[a-zA-Za-яА-Я]+(([' \-][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
+          value={favorite}
+          onChange={handleFavoriteChange}
+          required
+          placeholder="Enter true or false"
         />
       </label>
 

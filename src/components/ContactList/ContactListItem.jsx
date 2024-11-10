@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import css from './ContactListItem.module.css';
 
 const ContactListItem = ({ contact, deleteContact }) => {
-  const handleDelete = () => {
-    deleteContact(contact.id);
-  };
-
   return (
     <li className={css.contactListItem}>
-      <div className={css.contactAlign}> 
-        <div className={css.contcon}>{contact.name}</div>
-        <div className={css.contcon}>{contact.phone}</div>
+      <div className={css.contactAlign}>
+        <span>{contact.name}</span>
+        <span>{contact.email}</span>
+        <span>{contact.phone}</span>
+        <span>{contact.favorite}</span>
       </div>
-      <div className={css.btncon}>
-      <button onClick={handleDelete}>Delete</button>
-      </div>
+      <button className={css.deleteButton} onClick={deleteContact}>
+        Delete
+      </button>
     </li>
   );
 };

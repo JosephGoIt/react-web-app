@@ -10,7 +10,8 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { tasksReducer } from './tasks/slice';
+import contactsReducer from './tasks/contactSlice';
+import filterReducer from './tasks/filterSlice';
 import { authReducer } from './auth/slice';
 
 const authPersistConfig = {
@@ -19,14 +20,9 @@ const authPersistConfig = {
   whitelist: ['user', 'token', 'refreshToken'],
 };
 
-// Custom middleware to log actions
-const actionLogger = store => next => action => {
-  console.log('Dispatched action:', action);
-  return next(action);
-};
-
 const rootReducer = combineReducers({
-  tasks: tasksReducer,
+  contacts: contactsReducer,
+  filter: filterReducer,
   auth: persistReducer(authPersistConfig, authReducer),
 });
 
@@ -37,7 +33,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(actionLogger), // Add the action logger middleware here
+    }),
   devTools: process.env.NODE_ENV === 'development',
 });
 
