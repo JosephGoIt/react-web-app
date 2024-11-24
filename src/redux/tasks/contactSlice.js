@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../config'; // Centralized API URL
 
-// Define the API endpoint
-const API_ENDPOINT = 'https://phonebook-backend-ys8p.onrender.com/api/contacts';
+const API_ENDPOINT = `${API_BASE_URL}/contacts`;
 
 // Fetch all contacts
 export const fetchContacts = createAsyncThunk('contacts/fetchAll', async (_, thunkAPI) => {
@@ -28,7 +28,7 @@ export const addContact = createAsyncThunk('contacts/addContact', async (contact
 export const deleteContact = createAsyncThunk('contacts/deleteContact', async (id, thunkAPI) => {
   try {
     await axios.delete(`${API_ENDPOINT}/${id}`);
-    return id;
+    return id; // Return only the id for reducer filtering
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
   }
@@ -54,11 +54,27 @@ const contactSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+      .addCase(addContact.pending, state => {
+        state.isLoading = true;
+      })
       .addCase(addContact.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.items.push(action.payload);
       })
+      .addCase(addContact.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteContact.pending, state => {
+        state.isLoading = true;
+      })
       .addCase(deleteContact.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.items = state.items.filter(contact => contact.id !== action.payload);
+      })
+      .addCase(deleteContact.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });

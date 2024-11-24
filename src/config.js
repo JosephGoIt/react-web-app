@@ -1,0 +1,1 @@
+export const API_BASE_URL = 'https://phonebook-backend-ys8p.onrender.com/api';

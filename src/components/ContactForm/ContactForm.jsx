@@ -66,9 +66,9 @@ export const ContactForm = () => {
       <label className={css.formField}>
         <p className={css.formLabel}>Email</p>
         <input
-          type="text"
+          type="email"
           name="email"
-          pattern="^[a-zA-Za-яА-Я]+(([' \-][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
           value={email}
           onChange={handleEmailChange}
           required
