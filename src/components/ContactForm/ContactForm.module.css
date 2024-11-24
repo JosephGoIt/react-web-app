@@ -24,15 +24,15 @@
 }
 
 .input {
-  width: 100%; /* Ensure all inputs take full width of the form */
-  padding: 12px; /* Add consistent padding */
+  width: 100% !important; /* Explicitly set width to 100% with higher specificity */
+  padding: 12px;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
   background-color: #f7f7f7;
   font-size: 14px;
   color: #2a363b;
   outline: none;
-  box-sizing: border-box; /* Ensure consistent width calculation */
+  box-sizing: border-box; /* Ensure padding and border are included in width calculation */
 }
 
 .input:focus {
@@ -41,7 +41,7 @@
 
 .formButton {
   width: 100%; /* Match button width with input fields */
-  padding: 12px; /* Add consistent padding */
+  padding: 12px;
   background-color: #fc842d;
   color: #ffffff;
   border: none;
