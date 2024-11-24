@@ -16,7 +16,7 @@ export const ContactList = () => {
   return (
     <ul>
       {filteredContacts.map(contact => {
-        console.log('Contact:', contact); // Log each contact object
+        console.log('Contact in ContactList:', contact); // Log each contact object
         return (
           <ContactListItem
             key={contact.id}

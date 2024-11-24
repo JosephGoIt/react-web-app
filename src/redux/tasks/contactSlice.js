@@ -8,7 +8,10 @@ const API_ENDPOINT = `${API_BASE_URL}/contacts`;
 export const fetchContacts = createAsyncThunk('contacts/fetchAll', async (_, thunkAPI) => {
   try {
     const response = await axios.get(API_ENDPOINT);
-    return response.data;
+    return response.data.map(contact => ({
+      ...contact,
+      id: contact._id, // Map _id to id
+    }));
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
   }
@@ -27,6 +30,7 @@ export const addContact = createAsyncThunk('contacts/addContact', async (contact
 // Delete a contact
 export const deleteContact = createAsyncThunk('contacts/deleteContact', async (id, thunkAPI) => {
   try {
+    console.log('Sending DELETE request for ID:', id); // Log the ID
     await axios.delete(`${API_ENDPOINT}/${id}`);
     return id; // Return only the id for reducer filtering
   } catch (error) {
