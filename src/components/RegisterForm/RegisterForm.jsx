@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../../redux/auth/operations';
 import { getIsLoading } from '../../redux/auth/selectors';
-// import { NavLink } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { BtnLoader } from 'components/BtnLoader/BtnLoader';
+import css from './RegisterForm.module.css';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -16,69 +13,59 @@ export const RegisterForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-
-    // Check if any of the fields are empty
-    if (!name.trim()) {
-      toast.error('Name is required');
-      return;
-    }
-    if (!email.trim()) {
-      toast.error('Email is required');
-      return;
-    }
-    if (!password.trim()) {
-      toast.error('Password is required');
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      alert('All fields are required');
       return;
     }
     try {
       await dispatch(signup({ name, email, password })).unwrap();
-      // Clear form upon successful registration
       setName('');
       setEmail('');
       setPassword('');
-    } catch (error) {}
+    } catch (error) {
+      console.error('Registration failed:', error);
+    }
   };
 
   return (
-    <div>
-      <ToastContainer />
-      <p className="flex md:justify-start justify-center text-[14px] font-bold text-orange tracking-[0.56px] uppercase">
-        Register
-      </p>
-      <form onSubmit={handleSubmit} className="mt-[60px]">
-        <div className="flex flex-col gap-[40px] text-[14px] font-bold placeholder:text-textgray tracking-[0.56px] w-full md:max-w-[300px]">
-          <input
-            className="border-b-[1px] focus:border-orange outline-0 pb-[20px]"
-            type="text"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            placeholder="Name *"
-          />
-          <input
-            className="border-b-[1px] focus:border-orange outline-0 pb-[20px]"
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="Email *"
-          />
-          <input
-            className="border-b-[1px] focus:border-orange outline-0 pb-[20px]"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            placeholder="Password *"
-          />
-        </div>
-        <div className="flex md:flex-row flex-col items-center gap-[32px] mt-[60px]">
-          <button
-            type="submit"
-            className="flex w-[182px] py-[13px] px-[37px] bg-orange items-center justify-center rounded-[30px] shadow-[0px_4px_10px_0px_rgba(252,132,45,0.50)] text-white font-bold text-[14px] hover:bg-darkorange"
-            disabled={isLoading}
-          >
-            {isLoading ? <BtnLoader color="#fff" /> : 'Register'}
-          </button>
-        </div>
-      </form>
-    </div>
+    <form className={css.form} onSubmit={handleSubmit}>
+      <label className={css.formField}>
+        <p className={css.formLabel}>Name</p>
+        <input
+          type="text"
+          placeholder="Enter your name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          className={css.input}
+        />
+      </label>
+      <label className={css.formField}>
+        <p className={css.formLabel}>Email</p>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          className={css.input}
+        />
+      </label>
+      <label className={css.formField}>
+        <p className={css.formLabel}>Password</p>
+        <input
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          className={css.input}
+        />
+      </label>
+      <button
+        type="submit"
+        className={css.formButton}
+        disabled={isLoading}
+      >
+        {isLoading ? 'Registering...' : 'Register'}
+      </button>
+    </form>
   );
 };

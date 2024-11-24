@@ -12,30 +12,22 @@ export const ContactForm = () => {
   const [email, setEmail] = useState('');
   const [favorite, setFavorite] = useState('');
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handlePhoneChange = (e) => {
-    setPhone(e.target.value);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleFavoriteChange = (e) => {
-    setFavorite(e.target.value);
-  };
+  const handleNameChange = (e) => setName(e.target.value);
+  const handlePhoneChange = (e) => setPhone(e.target.value);
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handleFavoriteChange = (e) => setFavorite(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (name.trim() === '' || phone.trim() === '' || email.trim() === '') {
+      alert('Please fill in all required fields.');
       return;
     }
 
-    const nameExists = contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase());
+    const nameExists = contacts.find(
+      (contact) => contact.name.toLowerCase() === name.toLowerCase()
+    );
     if (nameExists) {
       alert(`${name} already exists in contacts!`);
       return;
@@ -55,11 +47,11 @@ export const ContactForm = () => {
         <input
           type="text"
           name="name"
-          pattern="^[a-zA-Za-яА-Я]+(([' \-][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
           value={name}
           onChange={handleNameChange}
           required
           placeholder="Enter name"
+          className={css.input}
         />
       </label>
 
@@ -68,11 +60,11 @@ export const ContactForm = () => {
         <input
           type="email"
           name="email"
-          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
           value={email}
           onChange={handleEmailChange}
           required
           placeholder="Enter email"
+          className={css.input}
         />
       </label>
 
@@ -81,24 +73,24 @@ export const ContactForm = () => {
         <input
           type="tel"
           name="number"
-          pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
           value={phone}
           onChange={handlePhoneChange}
           required
           placeholder="Enter number"
+          className={css.input}
         />
       </label>
 
       <label className={css.formField}>
         <p className={css.formLabel}>Favorite</p>
         <input
-          type="bolean"
+          type="text"
           name="favorite"
-          pattern="^[a-zA-Za-яА-Я]+(([' \-][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
           value={favorite}
           onChange={handleFavoriteChange}
           required
           placeholder="Enter true or false"
+          className={css.input}
         />
       </label>
 

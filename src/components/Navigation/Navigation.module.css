@@ -1,11 +1,17 @@
 .link {
-    display: inline-block;
-    text-decoration: none;
-    padding: 12px;
-    font-weight: 700;
-    color: #2a363b;
-  }
-  
-  .link.active {
-    color: #e84a5f;
-  }
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #2A363B;
+  font-size: 14px;
+}
+
+.link.active {
+  color: #FC842D;
+}
+
+.link:hover {
+  color: #FF7043;
+  text-decoration: underline;
+}

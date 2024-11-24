@@ -1,35 +1,62 @@
 .form {
-    width: 400px;
-    padding: 8px;
-    border: 1px solid grey;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 30px auto;
-  }
-  
-  .formField {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .formLabel {
-    font-size: 20px;
-  }
-  
-  .formButton {
-    padding: 15px 25px;
-    background-color: gray;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.3s ease;
-    font-weight: bold;
-  }
+  width: 360px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #ffffff;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Consistent spacing between fields */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-  .formButton:hover {
-    background-color: lightslategray;
-    transform: scale(1.05);
-  }
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Consistent spacing between label and input */
+}
+
+.formLabel {
+  font-size: 14px;
+  font-weight: bold;
+  color: #2a363b;
+}
+
+.input {
+  width: 100%; /* Ensure all inputs take full width of the form */
+  padding: 12px; /* Add consistent padding */
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+  font-size: 14px;
+  color: #2a363b;
+  outline: none;
+  box-sizing: border-box; /* Ensure consistent width calculation */
+}
+
+.input:focus {
+  border-color: #fc842d; /* Highlight border on focus */
+}
+
+.formButton {
+  width: 100%; /* Match button width with input fields */
+  padding: 12px; /* Add consistent padding */
+  background-color: #fc842d;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.formButton:hover {
+  background-color: #ff7043;
+  transform: scale(1.05);
+}
+
+.formButton:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}

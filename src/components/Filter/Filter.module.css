@@ -1,20 +1,28 @@
+Filter\Filter.module.css
 .container {
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-
-.container p {
+  margin-top: 30px;
+  margin-bottom: 30px;
   text-align: center;
-  margin: 0 auto 10px;
 }
 
-input[type='text'],
-input[type='tel'] {
-  width: 90%;
+.container p {
+  font-size: 16px;
+  font-weight: bold;
+  color: #2A363B;
+}
+
+input[type='text'] {
+  width: 80%;
   padding: 10px;
   margin-top: 5px;
-  border: 1px solid grey;
+  border: 1px solid #E0E0E0;
   border-radius: 5px;
-  display: block;
-  margin: 0 auto;
+  background-color: #F7F7F7;
+  font-size: 14px;
+  color: #2A363B;
+  outline: none;
+}
+
+input[type='text']:focus {
+  border-color: #FC842D;
 }
